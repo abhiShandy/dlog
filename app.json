@@ -17,15 +17,8 @@
       "bundleIdentifier": "com.abhishandy.dlog"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
       "package": "com.abhishandy.dlog",
       "versionCode": 2
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {

@@ -3,12 +3,14 @@ import { FlatList, StyleSheet, SafeAreaView, Text, View } from "react-native";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
 
-const Log = ({ date, content }) => (
-  <View>
-    <Text>{date}</Text>
-    <Text>{content}</Text>
-  </View>
-);
+const Log = ({ date, content }) => {
+  return (
+    <View style={styles.logContainer}>
+      <Text style={styles.date}>{date}</Text>
+      <Text style={styles.content}>{content}</Text>
+    </View>
+  );
+};
 
 export default function App() {
   const db = SQLite.openDatabase("dreamlog.db");
@@ -16,12 +18,6 @@ export default function App() {
   db.transaction((tx) => {
     tx.executeSql(
       "create table if not exists logs (id text primary key not null, date text, content text);"
-    );
-    tx.executeSql(
-      "insert into logs (id, date, content) values ('1', 'July 7, 2023', 'Friends laughing at me');"
-    );
-    tx.executeSql(
-      "insert into logs (id, date, content) values ('2', 'July 8, 2023', 'Monsters celebrating my birthday');"
     );
   });
 
@@ -51,7 +47,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Dream Log</Text>
+      <Text style={styles.title}>Dream Log</Text>
 
       <FlatList
         data={logs}
@@ -66,6 +62,20 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  date: {
+    fontSize: 14,
+    color: "#aaaaaa",
+  },
+  content: {
+    fontSize: 16,
+  },
+  logContainer: {
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 30,
+    marginBottom: 20,
+  },
   container: {
     backgroundColor: "#fff",
     marginLeft: 30,
