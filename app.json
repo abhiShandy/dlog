@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dlog",
+    "name": "D-Log",
     "slug": "dlog",
     "version": "1.1.6",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#dbd7d2"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
