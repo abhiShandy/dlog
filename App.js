@@ -1,16 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { FlatList, StyleSheet, SafeAreaView, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  View,
+  TextInput,
+  Button,
+} from "react-native";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
-
-const Log = ({ date, content }) => {
-  return (
-    <View style={styles.logContainer}>
-      <Text style={styles.date}>{date}</Text>
-      <Text style={styles.content}>{content}</Text>
-    </View>
-  );
-};
 
 export default function App() {
   const db = SQLite.openDatabase("dreamlog.db");
@@ -21,13 +20,30 @@ export default function App() {
     );
   });
 
-  const [logs, setLogs] = useState([
-    {
-      id: "1",
-      date: "July 8, 2023",
-      content: "Default log",
-    },
-  ]);
+  const [logs, setLogs] = useState([]);
+  const [isCreateLogFormOpen, setIsCreateLogFormOpen] = useState(false);
+  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [content, setContent] = useState("");
+
+  const openCreateLogForm = () => {
+    setIsCreateLogFormOpen(true);
+  };
+
+  const closeCreateLogForm = () => {
+    setIsCreateLogFormOpen(false);
+  };
+
+  const addLogToDatabase = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "insert into logs (id, date, content) values (?, ?, ?)",
+        [Math.random().toString(), date, content],
+        (tx, results) => {
+          if (results.rowsAffected === 0) alert("Log not added");
+        }
+      );
+    });
+  };
 
   const readLogsFromDatabase = () => {
     db.transaction((tx) => {
@@ -41,22 +57,106 @@ export default function App() {
     });
   };
 
+  const deleteLog = (id) => {
+    db.transaction((tx) => {
+      tx.executeSql("delete from logs where id = ?", [id], (tx, results) => {
+        if (results.rowsAffected === 0) alert("Log not deleted");
+      });
+    });
+  };
+
   useEffect(() => {
     readLogsFromDatabase();
-  }, []);
+  }, [addLogToDatabase]);
+
+  const Log = ({ id, date, content }) => {
+    return (
+      <View style={styles.logContainer}>
+        <View>
+          <Text style={styles.date}>{date ? date : "No date"}</Text>
+          <Text style={styles.content}>{content ? content : "No content"}</Text>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Dream Log</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Dream Log</Text>
+        <Button
+          style={styles.addPressable}
+          onPress={openCreateLogForm}
+          title="Add"
+        />
+      </View>
 
       <FlatList
         data={logs}
         renderItem={({ item }) => (
-          <Log date={item.date} content={item.content} />
+          <Log date={item.date} content={item.content} id={item.id} />
         )}
         keyExtractor={(item) => item.id}
       ></FlatList>
       <StatusBar style="auto" />
+
+      <View
+        style={[
+          isCreateLogFormOpen ? { display: "flex" } : { display: "none" },
+          {
+            borderWidth: 1,
+            borderColor: "black",
+            padding: 10,
+          },
+        ]}
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: "center",
+          }}
+        >
+          Add a dream log
+        </Text>
+        <TextInput
+          placeholder="Date"
+          defaultValue={new Date().toLocaleDateString()}
+          style={{
+            height: 40,
+            borderBottomColor: "gray",
+            borderBottomWidth: 1,
+          }}
+          value={date}
+          onChange={(e) => setDate(e.nativeEvent.text)}
+        />
+        <TextInput
+          placeholder="Content"
+          style={{
+            height: 100,
+            borderBottomColor: "gray",
+            borderBottomWidth: 1,
+          }}
+          value={content}
+          onChange={(e) => setContent(e.nativeEvent.text)}
+        />
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            margin: 10,
+          }}
+        >
+          <Button
+            onPress={() => {
+              addLogToDatabase();
+              closeCreateLogForm();
+            }}
+            title="Add"
+          />
+          <Button onPress={closeCreateLogForm} title="Cancel" />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -70,7 +170,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   logContainer: {
+    zIndex: 2,
     marginBottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 30,
@@ -78,7 +182,18 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#fff",
-    marginLeft: 30,
+    marginHorizontal: 30,
     marginTop: 50,
+  },
+  addPressable: {},
+  addIcon: {
+    fontSize: 24,
+    fontWeight: 300,
+  },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center",
   },
 });
