@@ -6,7 +6,7 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  Pressable,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
@@ -84,11 +84,9 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Dream Log</Text>
-        <Button
-          style={styles.addPressable}
-          onPress={openCreateLogForm}
-          title="Add"
-        />
+        <Pressable style={styles.button} onPress={openCreateLogForm}>
+          <Text style={styles.buttonText}>Add</Text>
+        </Pressable>
       </View>
 
       <FlatList
@@ -147,14 +145,21 @@ export default function App() {
             margin: 10,
           }}
         >
-          <Button
+          <Pressable
+            style={styles.button}
             onPress={() => {
               addLogToDatabase();
               closeCreateLogForm();
             }}
-            title="Add"
-          />
-          <Button onPress={closeCreateLogForm} title="Cancel" />
+          >
+            <Text style={styles.buttonText}>Add</Text>
+          </Pressable>
+          <Pressable
+            style={styles.secondaryButton}
+            onPress={closeCreateLogForm}
+          >
+            <Text style={styles.secondaryButtonText}>Cancel</Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -164,14 +169,15 @@ export default function App() {
 const styles = StyleSheet.create({
   date: {
     fontSize: 14,
-    color: "#aaaaaa",
+    fontWeight: "bold",
   },
   content: {
     fontSize: 16,
+    marginTop: 5,
   },
   logContainer: {
     zIndex: 2,
-    marginBottom: 10,
+    marginBottom: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -183,16 +189,43 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 50,
   },
-  addPressable: {},
-  addIcon: {
-    fontSize: 24,
-    fontWeight: 300,
-  },
   header: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
     marginBottom: 20,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "black",
+  },
+  secondaryButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: "black",
+  },
+  buttonText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "black",
   },
 });
