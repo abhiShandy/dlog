@@ -18,7 +18,11 @@
     },
     "android": {
       "package": "com.abhishandy.dlog",
-      "versionCode": 8
+      "versionCode": 8,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#dbd7d2"
+      }
     },
     "extra": {
       "eas": {
