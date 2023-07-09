@@ -33,6 +33,11 @@ export default function App() {
     setIsCreateLogFormOpen(false);
   };
 
+  const resetForm = () => {
+    setContent("");
+    setDate(new Date().toLocaleDateString());
+  };
+
   const addLogToDatabase = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -96,6 +101,7 @@ export default function App() {
       </View>
 
       <FlatList
+        style={[isCreateLogFormOpen ? { opacity: 0.25 } : { opacity: 1 }]}
         data={logs}
         renderItem={({ item }) => (
           <Log date={item.date} content={item.content} id={item.id} />
@@ -112,6 +118,11 @@ export default function App() {
             borderRadius: 4,
             borderColor: "black",
             padding: 10,
+            position: "absolute",
+            top: 200,
+            left: 0,
+            width: "100%",
+            backgroundColor: "white",
           },
         ]}
       >
@@ -156,6 +167,7 @@ export default function App() {
             style={styles.button}
             onPress={() => {
               addLogToDatabase();
+              resetForm();
               closeCreateLogForm();
             }}
           >
@@ -163,7 +175,10 @@ export default function App() {
           </Pressable>
           <Pressable
             style={styles.secondaryButton}
-            onPress={closeCreateLogForm}
+            onPress={() => {
+              resetForm();
+              closeCreateLogForm();
+            }}
           >
             <Text style={styles.secondaryButtonText}>Cancel</Text>
           </Pressable>
