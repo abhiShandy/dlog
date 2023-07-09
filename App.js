@@ -120,7 +120,7 @@ export default function App() {
           placeholder="Date"
           defaultValue={new Date().toLocaleDateString()}
           style={{
-            height: 40,
+            height: 48,
             borderBottomColor: "gray",
             borderBottomWidth: 1,
           }}
