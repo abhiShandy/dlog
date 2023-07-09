@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginBottom: 20,
   },
   container: {
     backgroundColor: "#fff",
@@ -195,5 +194,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
+    marginBottom: 20,
   },
 });
