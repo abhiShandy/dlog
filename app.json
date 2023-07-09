@@ -25,6 +25,16 @@
         "projectId": "1346591a-117f-4251-b774-0a0e780d43f8"
       }
     },
-    "owner": "abhishandy"
+    "owner": "abhishandy",
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true
+          }
+        }
+      ]
+    ]
   }
 }
