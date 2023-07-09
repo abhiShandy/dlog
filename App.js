@@ -70,11 +70,17 @@ export default function App() {
   }, [addLogToDatabase]);
 
   const Log = ({ id, date, content }) => {
+    const displayDate = date ? date : "No date";
+    const displayContent = content ? content : "No content";
     return (
       <View style={styles.logContainer}>
         <View>
-          <Text style={styles.date}>{date ? date : "No date"}</Text>
-          <Text style={styles.content}>{content ? content : "No content"}</Text>
+          <Text accessibilityLabel={displayDate} style={styles.date}>
+            {displayDate}
+          </Text>
+          <Text accessibilityLabel={displayContent} style={styles.content}>
+            {displayContent}
+          </Text>
         </View>
       </View>
     );
@@ -102,7 +108,8 @@ export default function App() {
         style={[
           isCreateLogFormOpen ? { display: "flex" } : { display: "none" },
           {
-            borderWidth: 1,
+            borderWidth: 2,
+            borderRadius: 4,
             borderColor: "black",
             padding: 10,
           },
@@ -152,7 +159,7 @@ export default function App() {
               closeCreateLogForm();
             }}
           >
-            <Text style={styles.buttonText}>Add</Text>
+            <Text style={styles.buttonText}>Confirm</Text>
           </Pressable>
           <Pressable
             style={styles.secondaryButton}
