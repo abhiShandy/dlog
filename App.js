@@ -8,6 +8,7 @@ import {
   TextInput,
   Pressable,
   RefreshControl,
+  Image,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
@@ -79,7 +80,13 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Dream Log</Text>
+        <Image
+          source={require("./assets/header-logo.png")}
+          style={{
+            width: 48,
+            height: 48,
+          }}
+        />
         <Pressable style={styles.button} onPress={openCreateLogForm}>
           <Text style={styles.buttonText}>Add</Text>
         </Pressable>
