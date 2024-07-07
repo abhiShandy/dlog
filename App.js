@@ -1,21 +1,21 @@
+import * as SQLite from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  View,
-  TextInput,
+  Image,
   Pressable,
   RefreshControl,
-  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
-import React, { useEffect, useState } from "react";
 import Log from "./components/Log";
 
 // Be careful with the database name
-const db = SQLite.openDatabase("db.db");
+const db = SQLite.openDatabaseSync("db.db");
 
 export default function App() {
   const [logs, setLogs] = useState([]);
@@ -38,42 +38,23 @@ export default function App() {
   };
 
   const addLogToDatabase = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
+    db.execSync(
         "insert into logs (id, date, content) values (?, ?, ?)",
-        [Math.random().toString(), date, content],
-        (tx, results) => {
-          if (results.rowsAffected === 0) alert("Log not added");
-        }
+        [Math.random().toString(), date, content]
       );
-    });
   };
 
   const readLogsFromDatabase = () => {
     setRefreshing(true);
-    db.transaction((tx) => {
-      tx.executeSql("select * from logs", [], (tx, results) => {
-        var temp = [];
-        for (let i = 0; i < results.rows.length; ++i) {
-          temp.push(results.rows.item(i));
-        }
-        setLogs(temp);
-      });
-    });
+    db.runSync("select * from logs");
+    
     setRefreshing(false);
   };
 
   useEffect(() => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
+    db.execSync(
           "create table if not exists logs (id text primary key not null, date text, content text);"
         );
-      },
-      (error) => {
-        console.log("Error creating table: " + error);
-      }
-    );
     readLogsFromDatabase();
   }, []);
 
