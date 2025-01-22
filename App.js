@@ -38,7 +38,7 @@ export default function App() {
   };
 
   const addLogToDatabase = () => {
-    db.execSync(
+    db.runSync(
         "insert into logs (id, date, content) values (?, ?, ?)",
         [Math.random().toString(), date, content]
       );
@@ -46,13 +46,13 @@ export default function App() {
 
   const readLogsFromDatabase = () => {
     setRefreshing(true);
-    db.runSync("select * from logs");
-    
+    const rows = db.getAllSync("select * from logs");
+    setLogs(rows);
     setRefreshing(false);
   };
 
   useEffect(() => {
-    db.execSync(
+    db.runSync(
           "create table if not exists logs (id text primary key not null, date text, content text);"
         );
     readLogsFromDatabase();
