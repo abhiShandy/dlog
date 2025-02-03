@@ -16,3 +16,7 @@ This app is to learn the publishing process on Google Play
     1. Install Expo Go app on your phone
     2. `bun start`
     3. Scan the QR code using the Expo Go app
+3. Build the app on cloud
+    1. `eas build -p android`
+4. Check the dependencies
+    1. `bunx expo install --check`
