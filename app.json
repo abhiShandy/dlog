@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#dbd7d2"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.abhishandy.dlog"
@@ -38,7 +40,8 @@
             "enableShrinkResourcesInReleaseBuilds": true
           }
         }
-      ]
+      ],
+      "expo-sqlite"
     ]
   }
 }
