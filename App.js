@@ -46,7 +46,7 @@ export default function App() {
 
   const readLogsFromDatabase = () => {
     setRefreshing(true);
-    const rows = db.getAllSync("select * from logs");
+    const rows = db.getAllSync("select * from logs order by date desc");
     setLogs(rows);
     setRefreshing(false);
   };
