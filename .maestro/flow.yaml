@@ -1,0 +1,8 @@
+appId: com.abhishandy.dlog
+---
+- openLink: exp://192.168.64.73:8081
+- tapOn: "Add"
+- tapOn: "content"
+- inputText: "Test"
+- hideKeyboard
+- tapOn: "Confirm"
