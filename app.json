@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "D-Log",
     "slug": "dlog",
     "version": "1.3.1",
