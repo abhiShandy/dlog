@@ -24,4 +24,5 @@ This app is to learn the publishing process on Google Play
     1. `brew tap mobile-dev-inc/tap`
     2. `brew install maestro`
 6. Run end-to-end tests:
+    1. Run app on simulator
     1. `maestro test .maestro/flow.yaml`
