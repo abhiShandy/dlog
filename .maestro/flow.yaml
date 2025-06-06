@@ -1,8 +1,11 @@
 appId: com.abhishandy.dlog
 ---
-- openLink: exp://192.168.1.46:8081
+- openLink: exp://192.168.1.11:8081
 - tapOn: "Add"
 - tapOn: "content"
-- inputText: "Test"
+- inputRandomText
 - hideKeyboard
 - tapOn: "Confirm"
+- swipe:
+    start: 50%, 20%
+    end: 50%, 80%
