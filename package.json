@@ -16,7 +16,8 @@
     "react-native": "0.79.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2"
+    "@babel/core": "^7.25.2",
+    "expo-dev-client": "^5.2.2"
   },
   "private": true
 }
