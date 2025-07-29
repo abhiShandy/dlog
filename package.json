@@ -8,16 +8,16 @@
     "e2e": "maestro test .maestro/flow.yaml"
   },
   "dependencies": {
-    "expo": "53.0.15",
+    "expo": "53.0.20",
     "expo-build-properties": "~0.14.8",
-    "expo-sqlite": "~15.2.13",
+    "expo-sqlite": "~15.2.14",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
-    "react-native": "0.79.4"
+    "react-native": "0.79.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "expo-dev-client": "^5.2.2"
+    "expo-dev-client": "~5.2.4"
   },
   "private": true
 }

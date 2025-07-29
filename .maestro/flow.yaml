@@ -4,7 +4,6 @@ appId: com.abhishandy.dlog
 - tapOn: "Add"
 - tapOn: "content"
 - inputRandomText
-- hideKeyboard
 - tapOn: "Confirm"
 - swipe:
     start: 50%, 20%
