@@ -1,17 +1,17 @@
 import * as SQLite from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Image,
   Pressable,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Log from "./components/Log";
 
 // Be careful with the database name
@@ -59,118 +59,120 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require("./assets/header-logo.png")}
-          style={{
-            width: 48,
-            height: 48,
-          }}
-        />
-        <Pressable style={styles.button} onPress={openCreateLogForm}>
-          <Text style={styles.buttonText}>Add</Text>
-        </Pressable>
-      </View>
-
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={readLogsFromDatabase}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            source={require("./assets/header-logo.png")}
+            style={{
+              width: 48,
+              height: 48,
+            }}
           />
-        }
-        style={[
-          isCreateLogFormOpen ? { opacity: 0.25 } : { opacity: 1 },
-          {
-            height: "90%",
-          },
-        ]}
-        data={logs}
-        renderItem={({ item }) => (
-          <Log date={item.date} content={item.content} id={item.id} />
-        )}
-        keyExtractor={(item) => item.id}
-      ></FlatList>
-      <StatusBar style="auto" />
+          <Pressable style={styles.button} onPress={openCreateLogForm}>
+            <Text style={styles.buttonText}>Add</Text>
+          </Pressable>
+        </View>
 
-      {isCreateLogFormOpen && (
-        <View
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={readLogsFromDatabase}
+            />
+          }
           style={[
+            isCreateLogFormOpen ? { opacity: 0.25 } : { opacity: 1 },
             {
-              borderWidth: 2,
-              borderRadius: 4,
-              borderColor: "black",
-              padding: 10,
-              position: "absolute",
-              top: 200,
-              left: 0,
-              width: "100%",
-              backgroundColor: "white",
+              height: "90%",
             },
           ]}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: "center",
-            }}
-          >
-            Add a dream log
-          </Text>
-          <TextInput
-            placeholder="Date"
-            defaultValue={new Date().toLocaleDateString()}
-            style={{
-              height: 48,
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
-            }}
-            value={date}
-            onChange={(e) => setDate(e.nativeEvent.text)}
-          />
-          <TextInput
-            placeholder="Content"
-            style={{
-              height: 100,
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
-            }}
-            value={content}
-            onChange={(e) => setContent(e.nativeEvent.text)}
-          />
+          data={logs}
+          renderItem={({ item }) => (
+            <Log date={item.date} content={item.content} id={item.id} />
+          )}
+          keyExtractor={(item) => item.id}
+        ></FlatList>
+        <StatusBar style="auto" />
+
+        {isCreateLogFormOpen && (
           <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              margin: 10,
-            }}
+            style={[
+              {
+                borderWidth: 2,
+                borderRadius: 4,
+                borderColor: "black",
+                padding: 10,
+                position: "absolute",
+                top: 200,
+                left: 0,
+                width: "100%",
+                backgroundColor: "white",
+              },
+            ]}
           >
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                addLogToDatabase();
-                resetForm();
-                closeCreateLogForm();
-                readLogsFromDatabase();
+            <Text
+              style={{
+                fontSize: 20,
+                textAlign: "center",
               }}
             >
-              <Text style={styles.buttonText}>Confirm</Text>
-            </Pressable>
-            <Pressable
-              style={styles.secondaryButton}
-              onPress={() => {
-                resetForm();
-                closeCreateLogForm();
+              Add a dream log
+            </Text>
+            <TextInput
+              placeholder="Date"
+              defaultValue={new Date().toLocaleDateString()}
+              style={{
+                height: 48,
+                borderBottomColor: "gray",
+                borderBottomWidth: 1,
+              }}
+              value={date}
+              onChange={(e) => setDate(e.nativeEvent.text)}
+            />
+            <TextInput
+              placeholder="Content"
+              style={{
+                height: 100,
+                borderBottomColor: "gray",
+                borderBottomWidth: 1,
+              }}
+              value={content}
+              onChange={(e) => setContent(e.nativeEvent.text)}
+            />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                margin: 10,
               }}
             >
-              <Text style={styles.secondaryButtonText}>Cancel</Text>
-            </Pressable>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  addLogToDatabase();
+                  resetForm();
+                  closeCreateLogForm();
+                  readLogsFromDatabase();
+                }}
+              >
+                <Text style={styles.buttonText}>Confirm</Text>
+              </Pressable>
+              <Pressable
+                style={styles.secondaryButton}
+                onPress={() => {
+                  resetForm();
+                  closeCreateLogForm();
+                }}
+              >
+                <Text style={styles.secondaryButtonText}>Cancel</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      )}
-    </SafeAreaView>
+        )}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -180,7 +182,6 @@ const styles = StyleSheet.create({
   },
   container: {
     marginHorizontal: 30,
-    marginTop: 50,
   },
   header: {
     display: "flex",
