@@ -7,6 +7,8 @@ This app is to learn the publishing process on Google Play
 1. Bun: https://bun.sh/docs
 2. Expo: https://docs.expo.dev/
 
+DO NOT UPGRADE bun. Keep it at v1.2.0 to prevent lock file changes for Expo build.
+
 ### How to
 
 1. Upgrade Expo
