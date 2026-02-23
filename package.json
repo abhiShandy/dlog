@@ -8,7 +8,7 @@
     "e2e": "maestro test .maestro/flow.yaml"
   },
   "dependencies": {
-    "expo": "^54.0.32",
+    "expo": "~54.0.33",
     "expo-build-properties": "~1.0.10",
     "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.9",
