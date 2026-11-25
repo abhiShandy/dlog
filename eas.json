@@ -13,7 +13,7 @@
     },
     "production": {
       "autoIncrement": true,
-      "bun": "1.4.3"
+      "bun": "1.4.5"
     }
   },
   "submit": {
